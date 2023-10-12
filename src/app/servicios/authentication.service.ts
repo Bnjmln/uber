@@ -6,6 +6,7 @@ interface User {
   name: string;
   password: string;
   email: string;
+  birth: string;
 }
 
 @Injectable({
@@ -27,7 +28,8 @@ export class AuthenticationService {
   async register(
     password: string,
     email: string,
-    name: string
+    name: string,
+    birth: string
   ): Promise<Boolean> {
     const users = (await this.local?.get('users')) || [];
     const exists = users.find(
@@ -42,6 +44,7 @@ export class AuthenticationService {
         password,
         name,
         email,
+        birth,
       };
       users.push(nuevo);
       await this.local.set('users', users);
