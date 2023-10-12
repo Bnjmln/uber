@@ -17,18 +17,71 @@
       </ion-item>
       <ion-item>
         <ion-input
-          [(ngModel)]="user.name"
-          aria-label="NombreyApellido"
-          label="Nombre y Apellido"
+          type="text"
+          id="username"
+          name="username"
+          class="form-control"
+          required
+          minlength="4"
+          appForBiddenUser="hola"
+          [(ngModel)]="user.username"
+          #username="ngModel"
+          aria-label="username"
+          label="Nombre de Usuario"
         ></ion-input>
+        <div *ngIf="username.invalid && (username.dirty || username.touched)"
+    class="alert">
+
+  <div *ngIf="username.errors?.['required']">
+    Campo Obligatorio
+  </div>
+  <div *ngIf="username.errors?.['minlength']">
+    Minimo 4 caracteres de longitud
+  </div>
+  <div *ngIf="username.errors?.['forbiddenName']">
+    Usuario no puede ser hola
+  </div>
+
+</div>
+      </ion-item>
+      <ion-item>
+        <ion-input
+        type="password"
+        id="pw"
+        name="pw"
+        class="form-control"
+        required 
+        minlength="6"
+        [(ngModel)]="user.pw"
+        #pw="ngModel"
+          aria-label="Contraseña"
+          label="Contraseña"
+        ></ion-input>
+        <div *ngIf="pw.invalid && (pw.dirty || pw.touched)"
+    class="alert">
+        <div *ngIf="pw.errors?.['required']">
+          Campo Obligatorio
+        </div>
+        <div *ngIf="pw.errors?.['minlength']">
+          Minimo 6 caracteres de longitud
+        </div>
+      </div>      
+
       </ion-item>
       <ion-item>
         <ion-input
           type="date"
+          id="birth"
+          name="birth"
+          class="form-control"
+          required
+          [(ngModel)]="user.birth"
+          #birth="ngModel"
           expand="full"
           label="Fecha Nacimiento"
           placeholder="Ingrese Fecha"
           slot="start"
+          required
         >
         </ion-input>
         <ion-modal [keepContentsMounted]="true">
@@ -36,26 +89,34 @@
             <ion-datetime id="datetime"></ion-datetime>
           </ng-template>
         </ion-modal>
+        <div *ngIf="birth.invalid && (birth.dirty || birth.touched)"
+    class="alert">
+    <div *ngIf="birth.errors?.['required']">
+      Campo Obligatorio
+    </div>
+    </div>
       </ion-item>
       <ion-item>
         <ion-input
-          [(ngModel)]="user.email"
+        type="email"
+        id="email"
+        name="email"
+        class="form-control"
+        required
+        [(ngModel)]="user.email"
+        #email="ngModel"
           aria-label="Correo Electronico"
           label="Correo Electronico"
-          type="email"
-        ></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input
-          [(ngModel)]="user.password"
-          aria-label="Contraseña"
-          type="password"
-          label="Contraseña"
-        ></ion-input>
-        <ion-icon id="pass-icon" slot="end"></ion-icon>
+          ></ion-input>
+
+        <div *ngIf="email.invalid && (pw.dirty || email.touched)"
+    class="alert">
+    <div *ngIf="email.errors?.['required']">
+      Campo Obligatorio
+    </div>
+    </div>
       </ion-item>
     </ion-list>
-
     <div class="botones">
       <ion-button (click)="register()" class="login-button" expand="block"
         >Crear cuenta</ion-button
