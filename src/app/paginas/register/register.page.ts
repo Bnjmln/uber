@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthenticationService } from 'src/app/servicios/authentication.service';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -13,20 +14,20 @@ export class RegisterPage {
   constructor(private auth: AuthenticationService) {}
 
   user = {
-    name: '',
-    password: '',
+    username: '',
+    pw: '',
+    birth: '',
     email: '',
   };
 
   register() {
-    this.auth
-      .register(this.user.password, this.user.email, this.user.name)
-      .then((res) => {
-        if (res) {
-          this.estado = 'Usuario ya Existe';
-        } else {
-          this.mensaje = 'Registro Exitoso';
-        }
-      });
+    if((this.user.username.length && this.user.pw.length && this.user.email.length) != 0) {
+      this.auth
+      .register(this.user.username, this.user.pw, this.user.birth, this.user.email)
+      .then((res) => { this.mensaje = 'Registro Exitoso'; })
+    }
+    else {
+      this.mensaje = 'Error en Registro';
+    }
   }
 }
